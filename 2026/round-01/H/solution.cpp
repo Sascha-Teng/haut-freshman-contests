@@ -2,62 +2,45 @@
 #include <cstdlib>
 using namespace std;
 
-/* 全局数组自动初始化为 0 */
-static unsigned char can[101][10][901];
-
 int main()
 {
     int n, s;
     cin >> n >> s;
-    /* can[len][prev][sum]: 前一位为 prev，后面 len 位能否凑出 sum */
-    for (int prev = 0; prev <= 9; prev++)
-        can[0][prev][0] = 1;
-
-    for (int len = 1; len <= n; len++)
+    if (s < 1 || s > 9 * n)
     {
-        for (int prev = 0; prev <= 9; prev++)
-        {
-            for (int sum = 0; sum <= s; sum++)
-            {
-                for (int d = 0; d <= 9; d++)
-                {
-                    if (abs(d - prev) <= 1 && sum >= d &&
-                        can[len - 1][d][sum - d])
-                    {
-                        can[len][prev][sum] = 1;
-                        break;
-                    }
-                }
-            }
-        }
+        cout << "-1\n";
+        return 0;
     }
 
-    char answer[101];
     int remaining = s;
-    int prev = 0;
-    for (int pos = 0; pos < n; pos++)
+    int previous = -1;
+    for (int i = 1; i <= n; i++)
     {
-        int chosen = -1;
-        for (int d = (pos == 0 ? 1 : 0); d <= 9; d++)
+        for (int d = (i == 1 ? 1 : 0); d <= 9; d++)
         {
-            if (pos > 0 && abs(d - prev) > 1)
+            if (i > 1 && abs(d - previous) > 1)
                 continue;
-            if (remaining >= d && can[n - pos - 1][d][remaining - d])
+
+            int low = 0, high = 0;
+            int smallest = d, largest = d;
+            for (int k = i + 1; k <= n; k++)
             {
-                chosen = d;
+                if (smallest > 0) smallest--;
+                if (largest < 9) largest++;
+                low += smallest;
+                high += largest;
+            }
+
+            int rest = remaining - d;
+            if (low <= rest && rest <= high)
+            {
+                cout << d;
+                remaining = rest;
+                previous = d;
                 break;
             }
         }
-        if (chosen == -1)
-        {
-            cout << "-1\n";
-            return 0;
-        }
-        answer[pos] = (char)('0' + chosen);
-        remaining -= chosen;
-        prev = chosen;
     }
-    answer[n] = '\0';
-    cout << answer << '\n';
+    cout << '\n';
     return 0;
 }
