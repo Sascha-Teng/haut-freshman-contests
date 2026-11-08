@@ -10,7 +10,7 @@
 
 | 题号 | 题目 | 题面 | 题解 |
 |---|---|---|---|
-| A | 寻室 | [题面](2026/round-01/A/problem.md) | 待编写 |
+| A | 寻室 | [题面](2026/round-01/A/problem.md) | [题解](2026/round-01/A/editorial.md) · [C 代码](2026/round-01/A/solution.c) · [C++ 代码](2026/round-01/A/solution.cpp) |
 | B | 雨山 | [题面](2026/round-01/B/problem.md) | 待编写 |
 | C | 藤萱 | [题面](2026/round-01/C/problem.md) | 待编写 |
 | D | 故站 | [题面](2026/round-01/D/problem.md) | 待编写 |
